@@ -12,6 +12,40 @@ void Watchytriangle::drawWatchFace(){
 
 void Watchytriangle::drawTime() {
 
+   // reset step counter at midnight
+    if (currentTime.Hour == 00 && currentTime.Minute == 00){
+      sensor.resetStepCounter();
+              //turn off radios
+      WiFi.mode(WIFI_OFF);
+      btStop();
+    }
+	// time adjustment of 15,5 seconds each day (Watchy runs too fast)
+
+    if (currentTime.Hour == 00 && currentTime.Minute == 30){
+        
+        RTC.read(currentTime);
+        int8_t sekunde = currentTime.Second;
+        int8_t minute = currentTime.Minute;
+        int8_t hour = currentTime.Hour;
+        int8_t day = currentTime.Day;
+        int8_t month = currentTime.Month;
+        int8_t year = tmYearToY2k(currentTime.Year);
+
+        delay(15500);
+
+        tmElements_t tm;
+        tm.Month = month;
+        tm.Day = day;
+        tm.Year = y2kYearToTm(year);
+        tm.Hour = hour;
+        tm.Minute = minute ;
+        tm.Second = sekunde;
+
+        RTC.set(tm);
+                
+         }
+	// end of time adjustment, if you don't like a time adjustment, just delete above lines
+
     const uint8_t* tagx[] = { xsun, xmon, xtue, xwed, xthu, xfri, xsat, xsun };
     const uint8_t* monx[] = { xjan, xfeb, xmar, xapr, xmay, xjun, xjul, xaug, xsep, xoct, xnov, xdec };
 
