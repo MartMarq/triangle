@@ -1,4 +1,4 @@
-#Watchface for Watchy (SQFMI) - triangle
+# Watchface for Watchy (SQFMI) - triangle
 
 no wifi, no bluetooth but long battery life
 
